@@ -1,4 +1,4 @@
-package com.funtiondoc.controller;
+package com.functiondoc.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
