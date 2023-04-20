@@ -16,6 +16,8 @@
 <!-- Template Main JS File -->
 <script
 	src="${pageContext.request.contextPath }/resources/assets/js/main.js"></script>
+<script
+	src="${pageContext.request.contextPath }/resources/assets/js/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -24,8 +26,43 @@
 				<div style="border: 1px black solid;" >
 					<h2 style="text-align: center;">안녕하세요 이용을 위해 우선 로그인해주세요!</h2>							
 				</div>
+				<p>회원아이디</p>
+				<input id="userId" type="text">
+				<p>비밀번호</p>
+				<input id="userPw" type="text">
+				<button>로그인</button>
+				<hr>
+				<p>회원아이디</p>
+				<input id="registerId" type="text">
+				<p>비밀번호</p>
+				<input id="registerPw" type="text">
+				<p>이름</p>
+				<input id="registerName" type="text">
+				<button onclick="register()">회원가입</button>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function register(){
+			
+			$.ajax({
+			    url: "${pageContext.request.contextPath }/userRegister",
+			    type: "get",
+			    data: {
+			        "registerId" : $("#registerId").val(),
+			        "registerPw" : $("#registerPw").val(),
+			        "registerName" : $("#registerName").val()
+			    },
+			    dataType: "json",
+			    success: function(response) {
+			        // 성공적으로 응답을 받았을 때 처리할 내용
+			    },
+			    error: function(jqXHR, textStatus, errorThrown) {
+			        // 오류 발생시 처리할 내용
+			    }
+			});
+
+		}
+	</script>
 </body>
 </html>
