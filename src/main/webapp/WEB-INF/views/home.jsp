@@ -62,46 +62,14 @@
 
 
 
-				<h2>회원가입</h2>
-				<form>
-					<label for="registerId">회원아이디:</label> <input type="text" id="registerId"
-						name="user_id" required><button>중복확인</button><br>
-					<label for="registerPw">비밀번호:</label> <input
-						type="password" id="registerPw" name="password" required><br>
-					<label for="password_confirm">비밀번호 확인:</label> <input
-						type="password" id="password_confirm" name="password_confirm"
-						required><br>
-					<label for="registerName">이름:</label> <input
-						type="text" id="registerName" name="name" required><br>
-					<label for="registerBirthday">생년월일:</label> <input type="date" id="registerBirthday"
-						name="birthday" required><br>
-					<label for="registerEmail">이메일:</label>
-					<input type="email" id="registerEmail" name="email" required><br>
-					<br>
-					<button type="submit">회원가입</button>
-				</form>
+				
 
 
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
-		function register() {
-			$.ajax({
-				url : "${pageContext.request.contextPath }/userRegister",
-				type : "get",
-				data : {
-					"registerId" : $("#registerId").val(),
-					"registerPw" : $("#registerPw").val(),
-					"registerName" : $("#registerName").val()
-				},
-				dataType : "json",
-				success : function(response) {
-					// 성공적으로 응답을 받았을 때 처리할 내용
-				},
-			});
-
-		}
+		
 	</script>
 </body>
 </html>

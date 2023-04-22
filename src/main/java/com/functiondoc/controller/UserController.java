@@ -45,6 +45,14 @@ public class UserController {
 		return gson.toJson(idCheckMsg);
 	}
 	
+	// 이메밍 확인 절차 기능
+	@RequestMapping(value ="/registerEmailConfirm")
+	public @ResponseBody String registerEmailConfirm(String email) {
+		System.out.println("Email : " + email);
+		return usersvc.registerEmail(email);
+	}
+	
+	
 	// 회원가입 기능
 	@RequestMapping(value = "/userRegister" )
 	public ModelAndView userRegister(UserDTO user) throws UnsupportedEncodingException {

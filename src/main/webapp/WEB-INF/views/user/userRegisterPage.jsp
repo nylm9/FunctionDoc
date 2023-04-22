@@ -45,7 +45,7 @@
 			<div class="col">
 				
 				<h2>회원가입</h2>
-				<form action="${pageContext.request.contextPath }/userRegister" method="post">
+				<form onsubmit="return userRegister()" action="${pageContext.request.contextPath }/userRegister" method="post">
 					<label for="registerId">회원아이디:</label> <input type="text" id="registerId"
 						name="userId" required><button type="button" onclick="registerId_Check()">중복확인</button><br>
 					<label for="registerPw">비밀번호:</label> <input
@@ -61,7 +61,9 @@
 					<label for="registerBirthday">생년월일:</label> <input type="date" id="registerBirthday"
 						name="userBirth" required><br>
 					<label for="registerEmail">이메일:</label>
-					<input type="email" id="registerEmail" name="userEmail" required><br>
+					<input type="email" id="registerEmail" name="userEmail" required><button type="button" onclick="registerEmail_confirm()">이메일 확인</button><br>
+					<label for="email_confirm">이메일 인증번호:</label>
+					<input type="password" id="email_confirm" onblur="email_confirm_check()" disabled="disabled" maxlength="6" placeholder="인증번호 6자리를 입력해주세요" >
 					<br>
 					<button type="submit" onsubmit="return userRegister()">회원가입</button>
 				</form>
@@ -75,7 +77,38 @@
 	//로그인 기능 체크
 	var registerId_Check_val = 0;
 	var registerPw_Confirm_val = 0;
+	var registerEmail_Confirm_val = 0;
 	
+	// 이메일 인증번호
+	var emailCode = "";
+		
+		// 회원 이메일 인증
+		function registerEmail_confirm(){
+			const email = $('#registerEmail').val();
+			console.log(email);
+			const checkInput = $('#email_confirm');
+			$.ajax({
+				type : 'get',
+				url : '${pageContext.request.contextPath }/registerEmailConfirm?email='+email+'',
+				success : function (data) {
+					console.log("data : " +  data);
+					checkInput.attr('disabled',false);
+					emailCode = data;
+					alert('인증번호가 전송되었습니다.')
+				}			
+			});
+		}
+		
+		function email_confirm_check(){
+			if($('#email_confirm').val() === emailCode){
+				console.log('이메일 번호가 일치합니다.');
+				registerEmail_Confirm_val = 1;
+			} else {
+				console.log('이메일 번호가 일치하지 않습니다.');
+				registerEmail_Confirm_val = 0;
+			}
+		}
+		
 		// 회원 아이디 중복 체크 
 		function registerId_Check(){
 			console.log('func-registerId-Check');
@@ -113,8 +146,9 @@
 			}
 		};
 		
-	
+		//  리턴 회원가입 
 		function userRegister() {
+			console.log(registerId_Check_val+","+registerPw_Confirm_val)
 			if(registerId_Check_val == 0){
 				alert('아이디 중복확인을 해주세요.');
 				return false;
