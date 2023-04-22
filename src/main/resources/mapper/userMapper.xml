@@ -10,6 +10,9 @@
 	  		VALUES(#{userId}, #{userPw},#{userName})
 	  	</insert>
 	  	
+	  	<select id="registerIdCheck" parameterType="String" resultType="String">
+	  		SELECT USERID FROM USERS WHERE USERID = #{registerId}
+	  	</select>
 	  	
 	  	
 	  	

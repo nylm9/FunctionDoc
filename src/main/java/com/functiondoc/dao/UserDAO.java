@@ -6,4 +6,6 @@ public interface UserDAO {
 
 	int userRegister(UserDTO userRegister);
 
+	String registerIdCheck(String registerId);
+
 }

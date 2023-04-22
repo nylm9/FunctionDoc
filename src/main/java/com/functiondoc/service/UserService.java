@@ -10,13 +10,27 @@ import com.functiondoc.dto.UserDTO;
 public class UserService {
 	
 	@Autowired
-	UserDAO udao;
+	UserDAO userdao;
 	
 	public void userRegister(UserDTO userRegister) {
 		
-		int insertResult = udao.userRegister(userRegister);
+		int insertResult = userdao.userRegister(userRegister);
 		
 		System.out.println(insertResult);
+		
+	}
+
+	public String registerIdCheck(String registerId) {
+		
+		String selectResult = userdao.registerIdCheck(registerId);
+		
+		System.out.println("selectResult : "+selectResult);
+		
+		if(selectResult != null) {
+			return "unavailable";
+		} else {
+			return "available";
+		}
 		
 	}
 
