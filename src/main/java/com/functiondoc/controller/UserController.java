@@ -1,6 +1,5 @@
 package com.functiondoc.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,9 +23,7 @@ public class UserController {
 	@RequestMapping(value="/userRegisterPage")
 	public ModelAndView userRegisterPage() {
 		ModelAndView mav = new ModelAndView();
-		
 		mav.setViewName("user/userRegisterPage");
-		
 		return mav;
 	};
 	
@@ -45,20 +42,34 @@ public class UserController {
 		return gson.toJson(idCheckMsg);
 	}
 	
-	// 이메밍 확인 절차 기능
+	// 이메밍 확인 절차 기능 
 	@RequestMapping(value ="/registerEmailConfirm")
 	public @ResponseBody String registerEmailConfirm(String email) {
 		System.out.println("Email : " + email);
 		return usersvc.registerEmail(email);
 	}
-	
+
+	// 로그인 기능
+	@RequestMapping(value = "/userLogin")
+	public ModelAndView uesrLogin(UserDTO user) {
+		
+		
+		return null;
+	}
 	
 	// 회원가입 기능
 	@RequestMapping(value = "/userRegister" )
-	public ModelAndView userRegister(UserDTO user) throws UnsupportedEncodingException {
+	public ModelAndView userRegister(UserDTO user) {
 		System.out.println("Server->userRegister");
 		ModelAndView mav = new ModelAndView();
 		System.out.println(user);
-		return null;
+		int registerResult = usersvc.userRegister(user);
+		if(registerResult > 0) {
+			mav.addObject("Msg", "회원가입이 성공하였습니다.");
+		} else {
+			mav.addObject("Msg", "회원가입에 실패하였습니다.");
+		}
+		mav.setViewName("home");
+		return mav;
 	}
 }

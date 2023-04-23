@@ -61,7 +61,7 @@
 					<label for="registerBirthday">생년월일:</label> <input type="date" id="registerBirthday"
 						name="userBirth" required><br>
 					<label for="registerEmail">이메일:</label>
-					<input type="email" id="registerEmail" name="userEmail" required><button type="button" onclick="registerEmail_confirm()">이메일 확인</button><br>
+					<input type="email" id="registerEmail" name="userEmail" required><button type="button" id="email_confirm_btn" onclick="return registerEmail_confirm()">이메일 확인</button><br>
 					<label for="email_confirm">이메일 인증번호:</label>
 					<input type="password" id="email_confirm" onblur="email_confirm_check()" disabled="disabled" maxlength="6" placeholder="인증번호 6자리를 입력해주세요" >
 					<br>
@@ -72,6 +72,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<script type="text/javascript">
 		
 	//로그인 기능 체크
@@ -79,35 +80,7 @@
 	var registerPw_Confirm_val = 0;
 	var registerEmail_Confirm_val = 0;
 	
-	// 이메일 인증번호
-	var emailCode = "";
-		
-		// 회원 이메일 인증
-		function registerEmail_confirm(){
-			const email = $('#registerEmail').val();
-			console.log(email);
-			const checkInput = $('#email_confirm');
-			$.ajax({
-				type : 'get',
-				url : '${pageContext.request.contextPath }/registerEmailConfirm?email='+email+'',
-				success : function (data) {
-					console.log("data : " +  data);
-					checkInput.attr('disabled',false);
-					emailCode = data;
-					alert('인증번호가 전송되었습니다.')
-				}			
-			});
-		}
-		
-		function email_confirm_check(){
-			if($('#email_confirm').val() === emailCode){
-				console.log('이메일 번호가 일치합니다.');
-				registerEmail_Confirm_val = 1;
-			} else {
-				console.log('이메일 번호가 일치하지 않습니다.');
-				registerEmail_Confirm_val = 0;
-			}
-		}
+	
 		
 		// 회원 아이디 중복 체크 
 		function registerId_Check(){
@@ -155,9 +128,58 @@
 			} else if (registerPw_Confirm_val == 0){
 				alert('비밀번호가 서로 일치하지 않습니다.');
 				return false;
+			} else if (registerEmail_Confirm_val == 0){
+				alert('이메일을 확인해주세요');
+				return false;
 			}
+			$('#registerEmail').attr('disabled',false);
 			return true;
 		}
 	</script>
+	
+	<!-- 이메일 인증 기능 소스 -->
+	<script type="text/javascript">
+		// 이메일 인증번호
+		var emailCode = "";
+		
+		// 회원 이메일 인증
+		function registerEmail_confirm(){
+			if(registerEmail_Confirm_val == 1){
+				alert('이미 확인된 이메일입니다.');
+				return false;
+			}
+			const email = $('#registerEmail').val();
+			console.log(email);
+			const checkInput = $('#email_confirm');
+			$.ajax({
+				type : 'get',
+				url : '${pageContext.request.contextPath }/registerEmailConfirm?email='+email+'',
+				success : function (data) {
+					console.log("data : " +  data);
+					if(data === "unavailable"){
+						alert('이미 존재하는 이메일 입니다.');
+					} else {
+						checkInput.attr('disabled',false);
+						emailCode = data;
+						alert('인증번호가 전송되었습니다.');
+					}
+				}			
+			});
+		}
+		
+		function email_confirm_check(){
+			if($('#email_confirm').val() === emailCode){
+				alert('이메일 번호가 일치합니다.');
+				registerEmail_Confirm_val = 1;
+				$('#email_confirm').attr('disabled',true);
+				$('#registerEmail').attr('disabled',true);
+				$('#email_confirm_btn').off('click');
+			} else {
+				alert('이메일 번호가 일치하지 않습니다.');
+				registerEmail_Confirm_val = 0;
+			}
+		}
+	</script>
+
 </body>
 </html>

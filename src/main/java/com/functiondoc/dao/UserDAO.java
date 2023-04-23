@@ -8,4 +8,6 @@ public interface UserDAO {
 
 	String registerIdCheck(String registerId);
 
+	String userEmailCheck(String email);
+
 }

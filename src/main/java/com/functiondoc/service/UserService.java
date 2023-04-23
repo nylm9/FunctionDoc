@@ -20,11 +20,13 @@ public class UserService {
 	UserDAO userdao;
 
 	// 회원가입 처리
-	public void userRegister(UserDTO userRegister) {
-
+	public int userRegister(UserDTO userRegister) {
+		
 		int insertResult = userdao.userRegister(userRegister);
 
 		System.out.println(insertResult);
+		
+		return insertResult;
 
 	}
 
@@ -57,6 +59,11 @@ public class UserService {
 	}
 
 	public String registerEmail(String email) {
+		// 이메일 중복체크
+		String selectResult = userdao.userEmailCheck(email);
+		if (selectResult != null) {
+			return "unavailable";
+		} 
 		// 이메일 양식 작성
 		RandomNumber();
 		String setFrom = "eto3e40@gmail.com";

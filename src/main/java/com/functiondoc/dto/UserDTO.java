@@ -8,7 +8,6 @@ public class UserDTO {
 	private String userBirth;
 	private String userState;
 	
-	
 	public String getUserId() {
 		return userId;
 	}

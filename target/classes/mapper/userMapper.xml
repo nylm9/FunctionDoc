@@ -6,12 +6,16 @@
   <mapper namespace="com.functiondoc.dao.UserDAO"  >
 	  	
 	  	<insert id="userRegister" parameterType="user">
-	  		INSERT INTO USERS(USERID, USERPASSWORD, USERNAME)
-	  		VALUES(#{userId}, #{userPw},#{userName})
+	  		INSERT INTO USERS(USERID, USERPASSWORD, USERNAME, USEREMAIL, USERBIRTH, USERSTATE)
+	  		VALUES(#{userId}, #{userPw},#{userName},#{userEmail},#{userBirth},'0')
 	  	</insert>
 	  	
 	  	<select id="registerIdCheck" parameterType="String" resultType="String">
 	  		SELECT USERID FROM USERS WHERE USERID = #{registerId}
+	  	</select>
+	  	
+	  	<select id="userEmailCheck" parameterType="String" resultType="String">
+	  		SELECT USEREMAIL FROM USERS WHERE USEREMAIL = #{email}
 	  	</select>
 	  	
 	  	
