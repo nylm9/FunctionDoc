@@ -19,13 +19,19 @@ public class UserService {
 	@Autowired
 	UserDAO userdao;
 
+	public String userLogin(UserDTO user) {
+		String userId = userdao.selectUserId(user);
+		
+		return userId;
+	};
+
 	// 회원가입 처리
 	public int userRegister(UserDTO userRegister) {
-		
+
 		int insertResult = userdao.userRegister(userRegister);
 
 		System.out.println(insertResult);
-		
+
 		return insertResult;
 
 	}
@@ -63,13 +69,13 @@ public class UserService {
 		String selectResult = userdao.userEmailCheck(email);
 		if (selectResult != null) {
 			return "unavailable";
-		} 
+		}
 		// 이메일 양식 작성
 		RandomNumber();
 		String setFrom = "eto3e40@gmail.com";
 		String toMail = email;
 		String title = "회원 가입 인증 이메일 입니다.";
-		String content = "저희 홈페이지에 방문해주셔서 감사합니다." + "<br><br>" + "해당 인증번호는 " + authNumber + "입니다." + "<br>"
+		String content = "저희 홈페이지에 방문해주셔서 감사합니다." + "<br><br>" + "해당 인증번호는 <h4>" + authNumber + "</h4> 입니다." + "<br>"
 				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 		mailSend(setFrom, toMail, title, content);
 		return Integer.toString(authNumber);
@@ -90,6 +96,6 @@ public class UserService {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-	};
+	}
 
 }

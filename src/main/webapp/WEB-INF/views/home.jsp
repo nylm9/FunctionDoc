@@ -50,27 +50,38 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<!-- 로그인 양식 정리 -->
-				<h4 style="font-weight: 800;">로그인</h4>
-				<form action="${pageContext.request.contextPath }/userLogin" method="post">
-					<table class="loginForm">
-						<tr class="loginForm">
-							<th class="loginForm mb-5" style="font-size: xx-small;">회원아이디</th>
-							<th class="loginForm" style="font-size: xx-small;">비밀번호</th>
-						</tr>
-						<tr class="loginForm">
-							<td class="loginForm"><input id="userId" name="userId" type="text"></td>
-							<td class="loginForm"><input id="userPw" name="userPw" type="password"></td>
-							<td class="loginForm"><button type="submit"
-									class="btn btn-secondary">로그인</button></td>
-						</tr>
-					</table>
-				</form>
+				<c:choose>
+					<c:when test="${sessionScope.loginId == null }">
+						<!-- 로그인 양식 정리 -->
+						<h4 style="font-weight: 800;">로그인</h4>
+						<form action="${pageContext.request.contextPath }/userLogin"
+							method="post">
+							<table class="loginForm">
+								<tr class="loginForm">
+									<th class="loginForm mb-5" style="font-size: xx-small;">회원아이디</th>
+									<th class="loginForm" style="font-size: xx-small;">비밀번호</th>
+								</tr>
+								<tr class="loginForm">
+									<td class="loginForm"><input id="userId" name="userId"
+										type="text"></td>
+									<td class="loginForm"><input id="userPw" name="userPw"
+										type="password"></td>
+									<td class="loginForm"><button type="submit"
+											class="btn btn-secondary">로그인</button></td>
+								</tr>
+							</table>
+						</form>
+					</c:when>
+					<c:otherwise>
+						<h3>Welcome to MyHomePage!</h3>
+					</c:otherwise>
+				</c:choose>
 				<hr>
 
 			</div>
 		</div>
 	</div>
+	<!-- 로그인 부문 기능 -->
 	<script type="text/javascript">
 		
 	</script>

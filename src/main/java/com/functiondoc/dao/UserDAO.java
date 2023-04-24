@@ -10,4 +10,6 @@ public interface UserDAO {
 
 	String userEmailCheck(String email);
 
+	String selectUserId(UserDTO user);
+
 }

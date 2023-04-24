@@ -18,6 +18,8 @@
 	  		SELECT USEREMAIL FROM USERS WHERE USEREMAIL = #{email}
 	  	</select>
 	  	
-	  	
+	  	<select id="selectUserId" parameterType="user" resultType="String">
+	  		SELECT USERID FROM USERS WHERE USERID = #{userId} AND USERPASSWORD = #{userPw};
+	  	</select>
 	  	
   </mapper>
